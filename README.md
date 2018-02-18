@@ -112,8 +112,8 @@ The Page object describes the current page.
 Properties (all optional):
 
 <table><tr><th>Property</th><th>JSON Key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Page Type</td><td>type  :|mandatory</td><td>String</td><td>We strongly recommend home, category, product, basket, checkout or confirmation for a traditional retail site. For other verticals, such as travel, you may need some customisation</td></tr>
-<tr><td>Page Breadcrumb</td><td>breadcrumb :|mandatory</td><td>Array</td><td>Multi-level categorisation of the current page in the site hierarchy, presented as an array where element 0 is the highest level category and the final element is the most granular (often the title of current page). On many sites this will reflect the website’s navigational breadcrumb, though without the first “Home” element.<br>This categorisation should be implemented consistantly across the site. e.g. ['balls', 'footballs', 'addidas']</td></tr>
+<tr><td>Page Type</td><td>type</td><td>String :|mandatory</td><td>We strongly recommend home, category, product, basket, checkout or confirmation for a traditional retail site. For other verticals, such as travel, you may need some customisation</td></tr>
+<tr><td>Page Breadcrumb</td><td>breadcrumb</td><td>Array :|mandatory</td><td>Multi-level categorisation of the current page in the site hierarchy, presented as an array where element 0 is the highest level category and the final element is the most granular (often the title of current page). On many sites this will reflect the website’s navigational breadcrumb, though without the first “Home” element.<br>This categorisation should be implemented consistantly across the site. e.g. ['balls', 'footballs', 'addidas']</td></tr>
 </table>
 
 For example:
