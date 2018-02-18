@@ -92,14 +92,14 @@ window.ninyastash = {
 		"returning": true
 	},
 	"page": {
-		"type": "content"
-	}
-        "breadcrumb": [
-      		"faq",
-      		"service"
-    	],
+		"type": "content",
+    breadcrumb: [
+      'faq',
+      'service'
+    ]
+	},
 	"environment": "production",
-  	"version": "1.3.1"
+  "version": "1.3.1"
 }
 ```
 
@@ -113,7 +113,7 @@ Properties (all optional):
 
 <table><tr><th>Property</th><th>JSON Key</th><th>Type</th><th>Description</th></tr>
 <tr><td>Page Type</td><td>type  :|mandatory</td><td>String</td><td>We strongly recommend home, category, product, basket, checkout or confirmation for a traditional retail site. For other verticals, such as travel, you may need some customisation</td></tr>
-<tr><td>Page Breadcrumb</td><td>breadcrumb  :|mandatory</td><td>Array</td><td>Multi-level categorisation of the current page in the site hierarchy, presented as an array where element 0 is the highest level category and the final element is the most granular (often the title of current page). On many sites this will reflect the website’s navigational breadcrumb, though without the first “Home” element.<br>This categorisation should be implemented consistantly across the site. e.g. ['balls', 'footballs', 'addidas']</td></tr>
+<tr><td>Page Breadcrumb</td><td>breadcrumb :|mandatory</td><td>Array</td><td>Multi-level categorisation of the current page in the site hierarchy, presented as an array where element 0 is the highest level category and the final element is the most granular (often the title of current page). On many sites this will reflect the website’s navigational breadcrumb, though without the first “Home” element.<br>This categorisation should be implemented consistantly across the site. e.g. ['balls', 'footballs', 'addidas']</td></tr>
 </table>
 
 For example:
@@ -164,7 +164,7 @@ window.ninyastash = {
 }
 ```
 
-## Product
+## Product :|optional
 
 The Product object describes a single product.
 
@@ -172,7 +172,6 @@ This object can:
 
 * Be a property of the ninyastash object, where one product is displayed on the page.
 * Be used as part of another Product object to denote linked products (see below).
-* Form part of the [Listing object](#listing) if several products are present on the page.
 * Form part of the [LineItem object](#lineitem) as part of a transaction or basket.
 
 There are many possible types of product on the Web - here, we first list properties which could reasonably apply to any product, and then list additional properties which could be declared for certain kinds of product.  In any case, the properties listed below are all optional.
@@ -181,17 +180,15 @@ There are many possible types of product on the Web - here, we first list proper
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
 <tr><td>Product ID</td><td>id</td><td>String</td><td>A unique identifier for the product, that is used by the web site only, i.e. not necessarily a Stock Keeping Unit (SKU) Code.</td></tr>
-<tr><td>Product URL</td><td>url</td><td>String</td><td>A canonical URL for this product.</td></tr>
+<tr><td>Product URL</td><td>url</td><td>String :|optional</td><td>A canonical URL for this product.</td></tr>
 <tr><td>Product Name</td><td>name</td><td>String</td><td>Name of the product.</td></tr>
-<tr><td>Product Description</td><td>description</td><td>String</td><td>Brief description of the product.</td></tr>
-<tr><td>Product Manufacturer</td><td>manufacturer</td><td>String</td><td>Name of the manufacturer for this product.</td></tr>
-<tr><td>Product Category</td><td>category</td><td>String</td><td>A short description of this type of product, e.g. 'shoes', 'package holiday'.</td></tr>
-<tr><td>Product Subcategory</td><td>subcategory</td><td>String</td><td>A short description of this type of product, with more granularity than the category, e.g. 'trainers'. <br>Use only if a category has been defined.</td></tr>
-<tr><td>Product Linked Products</td><td>linked_products</td><td>Array of <a href="#product">Product</a> objects</td><td>Products related to this one through well-defined relationships (e.g. a product in the same range from the same manufacturer).</td></tr>
-<tr><td>Product Currency</td><td>currency</td><td>String</td><td>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency used for this product's prices.</td></tr>
-<tr><td>Product Price</td><td>unit_sale_price</td><td>Number</td><td>The price for a single unit of this product actually paid by a customer, taking into account any sales and promotions. <b>Note:</b> If a promotion involves selling the same product with different prices in the same transaction (e.g. ten units of a product are in a basket, where the first two receive a 10% discount, and the rest are discounted by 20%), implement the 'least discounted' version of the product using this Product object, and implement the further discount by using the `total_discount` property of the <a href="#lineitem">LineItem</a> object, which forms part of <a href="#basket">Baskets</a> and <a href="#transaction">Transactions</a>.<i>Requires Product Currency to be declared.</i></td></tr>
-<tr><td>Product Price Excluding Promotions</td><td>unit_price</td><td>Number</td><td>The price of a single unit of this product, not taking into account discounts and promotions.  <i>Requires Product Currency and Product Price to be declared.</i></td></tr>
-<tr><td>Product Reviews</td><td>reviews</td><td>Array of <a href="#review">Review</a> objects</td><td>Reviews that have been written (by customers or staff) about this Product.</td></tr>
+<tr><td>Product Description</td><td>description :|optional</td><td>String</td><td>Brief description of the product.</td></tr>
+<tr><td>Product Manufacturer</td><td>manufacturer :|optional</td><td>String</td><td>Name of the manufacturer for this product.</td></tr>
+<tr><td>Product Category</td><td>category</td><td>String :|optional</td><td>A short description of this type of product, e.g. 'shoes', 'package holiday'.</td></tr>
+<tr><td>Product Subcategory</td><td>subcategory</td><td>String :|optional</td><td>A short description of this type of product, with more granularity than the category, e.g. 'trainers'. <br>Use only if a category has been defined.</td></tr>
+<tr><td>Product Currency</td><td>currency :|mandatory</td><td>String</td><td>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency used for this product's prices.</td></tr>
+<tr><td>Product Price You Sale this Product (with the reduced sales prices)</td><td>unit_sale_price</td><td>Number :|mandatory</td><td>The price for a single unit of this product actually paid by a customer, taking into account any sales and promotions. <b>Note:</b> If a promotion involves selling the same product with different prices in the same transaction (e.g. ten units of a product are in a basket, where the first two receive a 10% discount, and the rest are discounted by 20%), implement the 'least discounted' version of the product using this Product object, and implement the further discount by using the `total_discount` property of the <a href="#lineitem">LineItem</a> object, which forms part of <a href="#basket">Baskets</a> and <a href="#transaction">Transactions</a>.<i>Requires Product Currency to be declared.</i></td></tr>
+<tr><td>Product Price (without the reduced sales prices)</td><td>unit_price</td><td>Number :|mandatory</td><td>The price of a single unit of this product, not taking into account discounts and promotions.  <i>Requires Product Currency and Product Price to be declared.</i></td></tr>
 </table>
 
 ### Additional properties for products requiring stock keeping
@@ -208,21 +205,6 @@ There are many possible types of product on the Web - here, we first list proper
 <tr><td>Product Voucher Code</td><td>voucher</td><td>String</td><td>A voucher code that has been entered by the user which changes the price of this product.  If the user's voucher is not product-specific, it should instead be applied to the Transaction object after a transaction has been completed.</td></tr>
 </table>
 
-### Additional properties for products that have variations chosen by the user
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Product Color</td><td>color</td><td>String</td><td>The currently selected color of this product.</td></tr>
-<tr><td>Product Size</td><td>size</td><td>String</td><td>The currently selected size of this product.</td></tr>
-</table>
-
-### Additional properties for travel-related products
-
-As before, if some properties are not known at the current stage in a user's journey, such as checkin and checkout dates, simply do not declare them.
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Journeys</td><td>journeys</td><td>Array of <a href="#journey">Journey</a> objects</td><td>Descriptions of the flights, trains, or other journeys included in this product.</td></tr>
-<tr><td>Accommodations</td><td>accommodations</td><td>Array of <a href="#accommodation">Accommodation</a> objects</td><td>Descriptions of the accommodation stays included in this product.</td></tr>
-</table>
 
 See the following example of a populated Product object:
 
@@ -237,7 +219,6 @@ See the following example of a populated Product object:
 	"manufacturer": "Acme Corp",
 	"category": "Shoe",
 	"subcategory": "Trainers",
-	"linked_products": [Product, Product, Product, ...],
 	"color": "WHITE",
 	"size": "M",
 	"stock": 10,
@@ -430,3 +411,37 @@ window.ninyastash = {
 	}
 }
 ```
+
+## Journey
+
+The Journey object is used as part of a travel-related [Product](#product), representing a single 'leg' of travel.
+
+Properties:
+
+<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
+<tr><td>Journey Type</td><td>type</td><td>String</td><td>Label for the type of journey, e.g. 'flight','train'.</td></tr>
+<tr><td>Journey Name</td><td>name</td><td>String</td><td>Short description of this journey, e.g. 'Flight BA456 from JFK'.</td></tr>
+<tr><td>Journey Code</td><td>code</td><td>String</td><td>Unique identifier for this journey, e.g. an Amadeus or Sabre code.</td></tr>
+<tr><td>Journey Time</td><td>time</td><td>String</td><td><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> representation of the date and/or time of travel.</td></tr>
+<tr><td>Journey Adult Count</td><td>adults</td><td>Number</td><td>Number of adults travelling.</td></tr>
+<tr><td>Journey Child Count</td><td>children</td><td>Number</td><td>Number of children travelling.</td></tr>
+<tr><td>Journey Infant Count</td><td>infants</td><td>Number</td><td>Number of infants travelling.</td></tr>
+</table>
+
+Example:
+
+```javascript
+window.ninyastash = {
+	"product": {
+		"journeys": [{
+		"type": "flight",
+		"name": "Flight BA123 from London Heathrow",
+		"code": "FLIGHTCODE123",
+		"time": "2012-09-01 09:00",
+		"adults": 2,
+		"children": 2,
+		"infants": 0
+		}]
+	}
+}
+ ```
