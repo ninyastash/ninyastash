@@ -63,14 +63,13 @@ ninyastash can contain any of the following properties:
 
 
 <table>
-	<tr><th>JSON key</th><th>Type</th><th>Describes</th></tr>
+	<tr><th>JSON key</th><th><th>Type</th><th>Describes</th></tr>
 	<tr><td>user</td><td><a href="#user">User object</a></td><td>The visitor or logged in user.</td></tr>
 	<tr><td>page</td><td><a href="#page">Page object</a></td><td>The page currently being viewed.</td></tr>
 	<tr><td>product</td><td><a href="#product">Product object</a></td><td>The product being shown on this page, if a single product is being displayed.</td></tr>
 	<tr><td>basket</td><td><a href="#basket">Basket object</a></td><td>The state of the visitor's basket at the time this page was served.</td></tr>
 	<tr><td>transaction</td><td><a href="#transaction">Transaction object</a></td><td>A transaction that has <i>just completed</i> (if this is the first page view served to the user since they completed the transaction).</td></tr>
-	<tr><td>listing</td><td><a href="#listing">Listing object</a></td><td>Multiple products that are present on a page, excluding recommendations (e.g. search results, or a product category page).</td></tr>
-	<tr><td>recommendation</td><td><a href="#recommendation">Recommendation object</a></td><td>Products that are recommended to the user on this page.</td></tr>
+	<tr><td>listing</td><td><a href="#listing">Listing object</a></td><td>Multiple products that are present on a page (e.g. search results, or a product category page).</td></tr>
 	<tr><td>events</td><td>Array of <a href="#events">Event</a> objects</td><td>Contains the events that have occurred on the page.</td></tr>
 	<tr><td>version</td><td>String</td><td>Which version of this standard is being used.</td></tr>
 </table>
@@ -83,7 +82,7 @@ For each page, declare those parts of the ninyastash that make up your visitor's
 
 * **DO** Include the basket page wherever possible: this includes pages where the basket is not the main feature of the page, such as product, category or home pages.
 
-* **DON'T** Instantiate several fields with 'null' or empty strings if you don't have a value to populate them with.  For example, if you don't know a user's Facebook ID, there's no need to include that field in the User object at all.  Similarly, if a web site does not implement product recommendations, the window.ninyastash.recommendation object should not even be declared.
+* **DON'T** Instantiate several fields with 'null' or empty strings if you don't have a value to populate them with.  For example, if you don't know a user's Facebook ID, there's no need to include that field in the User object at all.
 
 A very simple example of a ninyastash object would be:
 
@@ -175,7 +174,6 @@ This object can:
 * Be a property of the ninyastash object, where one product is displayed on the page.
 * Be used as part of another Product object to denote linked products (see below).
 * Form part of the [Listing object](#listing) if several products are present on the page.
-* Form part of the [Recommendation object](#recommendation) if the page contains product recommendations.
 * Form part of the [LineItem object](#lineitem) as part of a transaction or basket.
 
 There are many possible types of product on the Web - here, we first list properties which could reasonably apply to any product, and then list additional properties which could be declared for certain kinds of product.  In any case, the properties listed below are all optional.
@@ -190,7 +188,7 @@ There are many possible types of product on the Web - here, we first list proper
 <tr><td>Product Manufacturer</td><td>manufacturer</td><td>String</td><td>Name of the manufacturer for this product.</td></tr>
 <tr><td>Product Category</td><td>category</td><td>String</td><td>A short description of this type of product, e.g. 'shoes', 'package holiday'.</td></tr>
 <tr><td>Product Subcategory</td><td>subcategory</td><td>String</td><td>A short description of this type of product, with more granularity than the category, e.g. 'trainers'. <br>Use only if a category has been defined.</td></tr>
-<tr><td>Product Linked Products</td><td>linked_products</td><td>Array of <a href="#product">Product</a> objects</td><td>Products related to this one through well-defined relationships (e.g. a product in the same range from the same manufacturer), not generated based on the output of recommendation algorithms.</td></tr>
+<tr><td>Product Linked Products</td><td>linked_products</td><td>Array of <a href="#product">Product</a> objects</td><td>Products related to this one through well-defined relationships (e.g. a product in the same range from the same manufacturer).</td></tr>
 <tr><td>Product Currency</td><td>currency</td><td>String</td><td>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency used for this product's prices.</td></tr>
 <tr><td>Product Price</td><td>unit_sale_price</td><td>Number</td><td>The price for a single unit of this product actually paid by a customer, taking into account any sales and promotions. <b>Note:</b> If a promotion involves selling the same product with different prices in the same transaction (e.g. ten units of a product are in a basket, where the first two receive a 10% discount, and the rest are discounted by 20%), implement the 'least discounted' version of the product using this Product object, and implement the further discount by using the `total_discount` property of the <a href="#lineitem">LineItem</a> object, which forms part of <a href="#basket">Baskets</a> and <a href="#transaction">Transactions</a>.<i>Requires Product Currency to be declared.</i></td></tr>
 <tr><td>Product Price Excluding Promotions</td><td>unit_price</td><td>Number</td><td>The price of a single unit of this product, not taking into account discounts and promotions.  <i>Requires Product Currency and Product Price to be declared.</i></td></tr>
@@ -434,63 +432,6 @@ window.ninyastash = {
 }
 ```
 
-## Recommendation
-
-The Recommendation object describes products that have been recommended on a page, based on recommendation algorithms.
-
-Properties:
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Recommendation Items</td><td>items</td><td>Array of <a href="#product">Product</a> objects</td><td>The products which have been recommended to the user on this page.</td></tr>
-</table>
-
-Example:
-
-```javascript
-window.ninyastash = {
-	"recommendation": {
-		"items": [
-		{
-			"url": "http://www.example.com/product?=ABC123",
-			"name": "ABC Trainers"
-		},
-		{
-			"url": "http://www.example.com/product?=DEF123",
-			"name": "DEF Trainers"
-		},
-		{
-			"url": "http://www.example.com/product?=GHI123",
-			"name": "GHI Trainers"
-		}, ...]
-	}
-}
-```
-
-
-## Event
-
-The Event object identifies when something has just happened, either since the last page view, or during the current page view.
-
-Properties:
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Event Type</td><td>type</td><td>String</td><td>Label for the type of event that's taken place, e.g. 'conversion','signup'.</td></tr>
-<tr><td>Event Time</td><td>time</td><td>String</td><td>String representation of the time at which this event occurred.</td></tr>
-<tr><td>Event Cause</td><td>cause</td><td>String</td><td>Description of what caused this event, e.g. 'idle for 5 minutes'.</td></tr>
-<tr><td>Event Effect</td><td>effect</td><td>String</td><td>Description for any user-facing activity that happens as a result of this event, e.g. 'popup shown'.</td></tr>
-</table>
-
-Example:
-
-```javascript
-window.ninyastash = {
-	"events": [{
-		"type": "newsletter_signup",
-		"cause": "checkout_popup"
-	}]
-}
- ```
-
 ## Journey
 
 The Journey object is used as part of a travel-related [Product](#product), representing a single 'leg' of travel.
@@ -524,68 +465,3 @@ window.ninyastash = {
 	}
 }
  ```
-
-## Accommodation
-
- The Accommodation object is used as part of a travel-related [Product](#product).
-
-Properties:
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Accommodation Type</td><td>type</td><td>String</td><td>Label for the type of accommodation, e.g. 'hotel'.</td></tr>
-<tr><td>Accommodation Name</td><td>name</td><td>String</td><td>Short description, e.g. 'New York, Algonquin Hotel'.</td></tr>
-<tr><td>Accommodation Code</td><td>code</td><td>String</td><td>Unique identifier, e.g. a reservation system code.</td></tr>
-<tr><td>Accommodation Checkin Time</td><td>checkin_time</td><td>String</td><td><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> representation of the date and/or time of checkin.</td></tr>
-<tr><td>Accommodation Checkout Time</td><td>checkout_time</td><td>String</td><td><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> representation of the date and/or time of checkout.</td></tr>
-<tr><td>Accommodation Adult Count</td><td>adults</td><td>Number</td><td>Number of adults travelling.</td></tr>
-<tr><td>Accommodation Child Count</td><td>children</td><td>Number</td><td>Number of children travelling.</td></tr>
-<tr><td>Accommodation Infant Count</td><td>infants</td><td>Number</td><td>Number of infants travelling.</td></tr>
-</table>
-
-Example:
-
-```javascript
-window.ninyastash = {
-	"product": {
-		"accommodations": [{
-		"type": "hotel",
-		"name": "New York, Algonquin Hotel",
-		"code": "BOOKINGCODE123",
-		"checkin_time": "2012-09-01",
-		"checkout_time": "2012-09-08",
-		"adults": 2,
-		"children": 2,
-		"infants": 0
-		}]
-	}
-}
- ```
-
-## Review
-
- The Review object models a review of a [Product](#product).
-
-Properties:
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Review Body</td><td>body</td><td>String</td><td>Body of this review.</td></tr>
-<tr><td>Review Rating</td><td>rating</td><td>String</td><td>How this review rates the Product.  For example, a score such as '5'.</td></tr>
-</table>
-
-Example:
-
-```javascript
-{
-	"product": {
-			"url": "http://www.example.com/product?=ABC123",
-			"name": "ABC Trainers",
-			"unit_sale_price": 25.00
-			"currency": "GBP",
-			"reviews": [ {"body": "These are excellent trainers!", "rating": "5"},
-						 {"body": "Pretty good", "rating": "4"} ]
-		},
-	"quantity": 1,
-	"subtotal": 30.00,
-	"total_discount": 5.00
-}
-```
