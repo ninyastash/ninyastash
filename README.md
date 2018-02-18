@@ -64,13 +64,14 @@ ninyastash can contain any of the following properties:
 
 <table>
 	<tr><th>JSON key</th><th>Type :|Mode</th><th>Describes</th></tr>
+  <tr><td>page</td><td><a href="#page">Page Object</a> :|mandatory</td><td>The page currently being viewed.</td></tr>
 	<tr><td>user</td><td><a href="#user">User Object</a> :|optional</td><td>The visitor or logged in user.</td></tr>
-	<tr><td>page</td><td><a href="#page">Page Object</a> :|mandatory</td><td>The page currently being viewed.</td></tr>
 	<tr><td>product</td><td><a href="#product">Product Object</a> :|optional</td><td>The product being shown on this page, if a single product is being displayed.</td></tr>
 	<tr><td>basket</td><td><a href="#basket">Basket Object</a> :|optional</td><td>The state of the visitor's basket at the time this page was served.</td></tr>
 	<tr><td>transaction</td><td><a href="#transaction">Transaction Object</a> :|optional</td><td>A transaction that has <i>just completed</i> (if this is the first page view served to the user since they completed the transaction).</td></tr>
 	<tr><td>listing</td><td><a href="#listing">Listing Object</a> :|optional</td><td>Multiple products that are present on a page (e.g. search results, or a product category page).</td></tr>
-	<tr><td>version</td><td>String :|mandatory</td><td>Which version of this standard is being used.</td></tr>
+  <tr><td>environment</td><td>String :|mandatory</td><td>A name for the environment which is creating this ninyastash data, e.g. 'development', 'testing', 'production'.</td></tr>
+  <tr><td>version</td><td>String :|mandatory</td><td>Which version of this standard is being used.</td></tr>
 </table>
 
 ## Which ninyastash properties should be populated?
@@ -99,7 +100,7 @@ window.ninyastash = {
 
 ## ninyastash Object Definitions
 
-## Page
+## Page :|mandatory
 
 The Page object describes the current page.
 
@@ -127,23 +128,20 @@ window.ninyastash = {
 }
 ```
 
-## User
+## User :|optional
 
 The User object describes the current user of the web site.  This object should be populated whether or not the user is logged in.
 
-Properties (all optional):
-
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>User Real Name</td><td>name</td><td>String</td><td>The user's full name.</td></tr>
-<tr><td>User Login Name</td><td>username</td><td>String</td><td>The identifier that the user provides to log in to the site (the 'username').<br>Use only if a category has been defined.</td></tr>
-<tr><td>User Internal ID</td><td>user_id</td><td>String</td><td>A unique identifier that the web site uses internally to identify this user.</td></tr>
-<tr><td>User Email Address</td><td>email</td><td>String</td><td>The user's full email address.</td></tr>
-<tr><td>User Preferred Language</td><td>language</td><td>String</td><td>The user's preferred language, must be an <a href="http://en.wikipedia.org/wiki/IETF_language_tag">IETF compatible string</a>, e.g. 'en-us', 'en-gb'.  IETF codes start with an <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1</a> language representation, and are extensible by region.</td></tr>
-<tr><td>User Returning Status</td><td>returning</td><td>Boolean</td><td>False if this page view forms part of the user's first visit to this site, True otherwise.</td></tr>
-<tr><td>User Transacted Status</td><td>has_transacted</td><td>Boolean</td><td>True if this user has completed a transaction at any time in the past (i.e. earlier in this visit, or during a previous visit).</td></tr>
-<tr><td>User Types</td><td>types</td><td>Array of Strings</td><td>Arbitrary labels to assign to this user, e.g. 'high-value','female'.</td></tr>
-<tr><td>User Facebook ID</td><td>facebook_id</td><td>Number</td><td>The user's Facebook User ID, as returned by the Facebook API.</td></tr>
-<tr><td>User Twitter ID</td><td>twitter_id</td><td>String</td><td>The user's Twitter ID.</td></tr>
+<tr><td>User Real Name</td><td>name</td><td>String :|optional</td><td>The user's full name, e.g. 'John Doe'</td></tr>
+<tr><td>User Login Name</td><td>username</td><td>String :|optional</td><td>If provided (most system not uses usernames): The identifier that the user provides to log in to the site (the 'username').<br>Use only if a category has been defined.</td></tr>
+<tr><td>User Internal ID</td><td>user_id</td><td>String :|optional</td><td>A unique identifier that the web site uses internally to identify this user.</td></tr>
+<tr><td>User Email Address</td><td>email</td><td>String :|optional</td><td>The user's full email address.</td></tr>
+<tr><td>User Preferred Language</td><td>language</td><td>String :|optional</td><td>The user's preferred language, must be an <a href="http://en.wikipedia.org/wiki/IETF_language_tag">IETF compatible string</a>, e.g. 'en-us', 'en-gb'.  IETF codes start with an <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1</a> language representation, and are extensible by region.</td></tr>
+<tr><td>User Returning Status</td><td>returning</td><td>Boolean :|optional</td><td>False if this page view forms part of the user's first visit to this site, True otherwise.</td></tr>
+<tr><td>User Transacted Status</td><td>has_transacted</td><td>Boolean :|optional</td><td>True if this user has completed a transaction at any time in the past (i.e. earlier in this visit, or during a previous visit).</td></tr>
+<tr><td>User Gender</td><td>gender</td><td>String(m|f) :|optional</td><td>Male: m. Female: f</td></tr>
+<tr><td>User Session</td><td>session</td><td>String :|optional</td><td>If provided</td></tr>
 </table>
 
 Example:
