@@ -63,13 +63,13 @@ ninyastash can contain any of the following properties:
 
 
 <table>
-	<tr><th>JSON key</th><th><th>Type/Mode</th><th>Describes</th></tr>
-	<tr><td>user</td><td><a href="#user">Object/optional</a></td><td>The visitor or logged in user.</td></tr>
-	<tr><td>page</td><td><a href="#page">Object/mandatory</a></td><td>The page currently being viewed.</td></tr>
-	<tr><td>product</td><td><a href="#product">Object/optional</a></td><td>The product being shown on this page, if a single product is being displayed.</td></tr>
-	<tr><td>basket</td><td><a href="#basket">Object/optional</a></td><td>The state of the visitor's basket at the time this page was served.</td></tr>
-	<tr><td>transaction</td><td><a href="#transaction">Object/optional</a></td><td>A transaction that has <i>just completed</i> (if this is the first page view served to the user since they completed the transaction).</td></tr>
-	<tr><td>listing</td><td><a href="#listing">Object/optional</a></td><td>Multiple products that are present on a page (e.g. search results, or a product category page).</td></tr>
+	<tr><th>JSON key</th><th>Type/Mode</th><th>Describes</th></tr>
+	<tr><td>user</td><td><a href="#user">Object</a>/optional</td><td>The visitor or logged in user.</td></tr>
+	<tr><td>page</td><td><a href="#page">Object</a>/mandatory</td><td>The page currently being viewed.</td></tr>
+	<tr><td>product</td><td><a href="#product">Object</a>/optional</td><td>The product being shown on this page, if a single product is being displayed.</td></tr>
+	<tr><td>basket</td><td><a href="#basket">Object</a>/optional</td><td>The state of the visitor's basket at the time this page was served.</td></tr>
+	<tr><td>transaction</td><td><a href="#transaction">Object</a>/optional</td><td>A transaction that has <i>just completed</i> (if this is the first page view served to the user since they completed the transaction).</td></tr>
+	<tr><td>listing</td><td><a href="#listing">Object</a>/optional</td><td>Multiple products that are present on a page (e.g. search results, or a product category page).</td></tr>
 	<tr><td>version</td><td>String/mandatory</td><td>Which version of this standard is being used.</td></tr>
 </table>
 
