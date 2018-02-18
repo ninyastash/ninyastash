@@ -163,6 +163,29 @@ window.ninyastash = {
 }
 ```
 
+## Listing :|optional
+
+The listing object describes a list of [Products](#product), for example as displayed as part of category page or search results page.
+
+Properties:
+
+<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
+<tr><td>Listing Id Query</td><td>id</td><td>Number :|mandatory</td><td>If the products are search results, the query that was entered.</td></tr>
+<tr><td>Listing Items</td><td>items</td><td>Array of <a href="#product">Product</a> objects  :|mandatory</td><td>The products which have been displayed to the user on this page.</td></tr>
+</table>
+
+Example:
+
+```javascript
+window.ninyastash = {
+	"listing": {
+		"id": "shoes on sale",
+		"items": [Product, Product, Product, ...]
+	}
+}
+```
+
+
 ## Product :|optional
 
 The Product object describes a single product.
@@ -181,13 +204,13 @@ There are many possible types of product on the Web - here, we first list proper
 <tr><td>Product ID</td><td>id</td><td>String</td><td>A unique identifier for the product, that is used by the web site only, i.e. not necessarily a Stock Keeping Unit (SKU) Code.</td></tr>
 <tr><td>Product URL</td><td>url</td><td>String :|optional</td><td>A canonical URL for this product.</td></tr>
 <tr><td>Product Name</td><td>name</td><td>String</td><td>Name of the product.</td></tr>
-<tr><td>Product Description</td><td>description :|optional</td><td>String</td><td>Brief description of the product.</td></tr>
+<tr><td>Product Description</td><td>description :|optional</td><td>String</td><td>Brief (truncated to almost 80 characters) description of the product.</td></tr>
 <tr><td>Product Manufacturer</td><td>manufacturer :|optional</td><td>String</td><td>Name of the manufacturer for this product.</td></tr>
 <tr><td>Product Category</td><td>category</td><td>String :|optional</td><td>A short description of this type of product, e.g. 'shoes', 'package holiday'.</td></tr>
 <tr><td>Product Subcategory</td><td>subcategory</td><td>String :|optional</td><td>A short description of this type of product, with more granularity than the category, e.g. 'trainers'. <br>Use only if a category has been defined.</td></tr>
 <tr><td>Product Currency</td><td>currency :|mandatory</td><td>String</td><td>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency used for this product's prices.</td></tr>
-<tr><td>Product Price You Sale this Product (with the reduced sales prices)</td><td>unit_sale_price</td><td>Number :|mandatory</td><td>The price for a single unit of this product actually paid by a customer, taking into account any sales and promotions. <b>Note:</b> If a promotion involves selling the same product with different prices in the same transaction (e.g. ten units of a product are in a basket, where the first two receive a 10% discount, and the rest are discounted by 20%), implement the 'least discounted' version of the product using this Product object, and implement the further discount by using the `total_discount` property of the <a href="#lineitem">LineItem</a> object, which forms part of <a href="#basket">Baskets</a> and <a href="#transaction">Transactions</a>.<i>Requires Product Currency to be declared.</i></td></tr>
-<tr><td>Product Price (without the reduced sales prices)</td><td>unit_price</td><td>Number :|mandatory</td><td>The price of a single unit of this product, not taking into account discounts and promotions.  <i>Requires Product Currency and Product Price to be declared.</i></td></tr>
+<tr><td>Product Sales Price</td><td>unit_sale_price</td><td>Number :|mandatory</td><td>The price for a single unit of this product actually paid by a customer, taking into account any sales and promotions. <b>Note:</b> If a promotion involves selling the same product with different prices in the same transaction (e.g. ten units of a product are in a basket, where the first two receive a 10% discount, and the rest are discounted by 20%), implement the 'least discounted' version of the product using this Product object, and implement the further discount by using the `total_discount` property of the <a href="#lineitem">LineItem</a> object, which forms part of <a href="#basket">Baskets</a> and <a href="#transaction">Transactions</a>.<i>Requires Product Currency to be declared.</i></td></tr>
+<tr><td>Product Price</td><td>unit_price</td><td>Number :|mandatory</td><td>The price of a single unit of this product, not taking into account discounts and promotions.  <i>Requires Product Currency and Product Price to be declared.</i></td></tr>
 </table>
 
 ### Additional properties for products requiring stock keeping
@@ -229,17 +252,17 @@ See the following example of a populated Product object:
 ```
 
 
-## LineItem
+## LineItem :|only in connection to Basket or Transaction (s.b.)
 
 The LineItem object describes a quantity of [Products](#product).  Arrays of LineItems are used as part of a [Basket](#basket) or [Transaction](#transaction).
 
 Properties:
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>LineItem Product</td><td>product</td><td><a href="#product">Product</a> object</td><td><i>Mandatory.</i> The product which has been added to the basket or transaction.</td></tr>
-<tr><td>LineItem Quantity</td><td>quantity</td><td>Number</td><td><i>Mandatory.</i> The number of this product that has been added to the basket or transaction.</td></tr>
-<tr><td>LineItem Subtotal</td><td>subtotal</td><td>Number</td><td>Total cost of this LineItem, including tax, excluding shipping and discounts.</td></tr>
-<tr><td>LineItem Total Discount</td><td>total_discount</td><td>Number</td><td>The total discount applied when buying the specified quantity of this product (taking into account any quantity-specific product offers, such as 'buy one get one free').  The total amount paid for this LineItem should be <i>Subtotal - Total Discount</i>.</td></tr>
+<tr><td>LineItem Product</td><td>product :|mandatory</td><td><a href="#product">Product</a> object</td><td><i>Mandatory.</i> The product which has been added to the basket or transaction.</td></tr>
+<tr><td>LineItem Quantity</td><td>quantity :|mandatory</td><td>Number</td><td><i>Mandatory.</i> The number of this product that has been added to the basket or transaction.</td></tr>
+<tr><td>LineItem Subtotal</td><td>subtotal :|mandatory</td><td>Number</td><td>Total cost of this LineItem, including tax, excluding shipping and discounts.</td></tr>
+<tr><td>LineItem Total Discount</td><td>total_discount :|mandatory</td><td>Number</td><td>The total discount applied when buying the specified quantity of this product (taking into account any quantity-specific product offers, such as 'buy one get one free').  The total amount paid for this LineItem should be <i>Subtotal - Total Discount</i>.</td></tr>
 </table>
 
 Example:
@@ -388,59 +411,3 @@ window.ninyastash = {
 	}
 }
 ```
-
-## Listing
-
-The listing object describes a list of [Products](#product), for example as displayed as part of category page or search results page.
-
-Properties:
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Listing Search Query</td><td>query</td><td>String</td><td>If the products are search results, the query that was entered.</td></tr>
-<tr><td>Listing Items</td><td>items</td><td>Array of <a href="#product">Product</a> objects</td><td>The products which have been displayed to the user on this page.</td></tr>
-</table>
-
-Example:
-
-```javascript
-window.ninyastash = {
-	"listing": {
-		"query": "shoes on sale",
-		"items": [Product, Product, Product, ...]
-	}
-}
-```
-
-## Journey
-
-The Journey object is used as part of a travel-related [Product](#product), representing a single 'leg' of travel.
-
-Properties:
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Journey Type</td><td>type</td><td>String</td><td>Label for the type of journey, e.g. 'flight','train'.</td></tr>
-<tr><td>Journey Name</td><td>name</td><td>String</td><td>Short description of this journey, e.g. 'Flight BA456 from JFK'.</td></tr>
-<tr><td>Journey Code</td><td>code</td><td>String</td><td>Unique identifier for this journey, e.g. an Amadeus or Sabre code.</td></tr>
-<tr><td>Journey Time</td><td>time</td><td>String</td><td><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> representation of the date and/or time of travel.</td></tr>
-<tr><td>Journey Adult Count</td><td>adults</td><td>Number</td><td>Number of adults travelling.</td></tr>
-<tr><td>Journey Child Count</td><td>children</td><td>Number</td><td>Number of children travelling.</td></tr>
-<tr><td>Journey Infant Count</td><td>infants</td><td>Number</td><td>Number of infants travelling.</td></tr>
-</table>
-
-Example:
-
-```javascript
-window.ninyastash = {
-	"product": {
-		"journeys": [{
-		"type": "flight",
-		"name": "Flight BA123 from London Heathrow",
-		"code": "FLIGHTCODE123",
-		"time": "2012-09-01 09:00",
-		"adults": 2,
-		"children": 2,
-		"infants": 0
-		}]
-	}
-}
- ```
