@@ -105,7 +105,7 @@ window.ninyastash = {
 
 ## ninyastash Object Definitions
 
-## Page :|mandatory
+## Page
 
 The Page object describes the current page.
 
@@ -130,7 +130,7 @@ window.ninyastash = {
 }
 ```
 
-## User :|optional
+## User
 
 The User object describes the current user of the web site.  This object should be populated whether or not the user is logged in.
 
@@ -163,7 +163,7 @@ window.ninyastash = {
 }
 ```
 
-## Listing :|optional
+## Listing
 
 The listing object describes a list of [Products](#product), for example as displayed as part of category page or search results page.
 
@@ -186,7 +186,7 @@ window.ninyastash = {
 ```
 
 
-## Product :|optional
+## Product
 
 The Product object describes a single product.
 
@@ -252,7 +252,7 @@ See the following example of a populated Product object:
 ```
 
 
-## LineItem :|only in connection to Basket or Transaction (s.b.)
+## LineItem
 
 The LineItem object describes a quantity of [Products](#product).  Arrays of LineItems are used as part of a [Basket](#basket) or [Transaction](#transaction).
 
