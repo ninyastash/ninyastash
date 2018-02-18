@@ -157,9 +157,8 @@ window.ninyastash = {
 		"email": "user@example.com",
 		"language": "en-gb",
 		"returning": true,
-		"types": ["high-value","female"]
-		"facebook_id": 12345678901232345,
-		"twitter_id": "myid"
+		"gender": "f",
+		"session": "a8d7f6w9evje8262890c0d8d7cd7d628hvjelw"
 	}
 }
 ```
