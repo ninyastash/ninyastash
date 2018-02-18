@@ -92,9 +92,14 @@ window.ninyastash = {
 		"returning": true
 	},
 	"page": {
-		"category": "home"
+		"type": "content",
+    breadcrumb: [
+      'faq',
+      'service'
+    ]
 	},
-	"version": "1.1.1"
+	"environment": "production",
+  "version": "1.3.1"
 }
 ```
 
@@ -107,11 +112,8 @@ The Page object describes the current page.
 Properties (all optional):
 
 <table><tr><th>Property</th><th>JSON Key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Page Category</td><td>category</td><td>String</td><td>A short description of the type of page, e.g. 'home', 'product', 'category', 'search', 'basket', 'checkout', 'confirmation'.  The page's position in the site hierarchy should not be used in this field, however it could be used as the subcategory.</td></tr>
-<tr><td>Page Subcategory</td><td>subcategory</td><td>String</td><td>A short description of the instance of this type of page, e.g. 'landing', 'checkout-stage1'.  Site hierarchies can be used, e.g. 'Womens - Shoes - Running Shoes'.<br>Use only if a category has been defined.</td></tr>
-<tr><td>System Environment</td><td>environment</td><td>String</td><td>A name for the environment which is creating this ninyastash data, e.g. 'development', 'testing', 'production'.</td></tr>
-<tr><td>Page Variation</td><td>variation</td><td>String</td><td>If serving multiple versions of this page during testing, specify a variation name. e.g. 'original','newstyle'</td></tr>
-<tr><td>Page Revision</td><td>revision</td><td>String</td><td>If a site's pages implement versioning, state a revision here, e.g. '1.1'.</td></tr>
+<tr><td>Page Type</td><td>type  :|mandatory</td><td>String</td><td>We strongly recommend home, category, product, basket, checkout or confirmation for a traditional retail site. For other verticals, such as travel, you may need some customisation</td></tr>
+<tr><td>Page Breadcrumb</td><td>breadcrumb  :|mandatory</td><td>Array</td><td>Multi-level categorisation of the current page in the site hierarchy, presented as an array where element 0 is the highest level category and the final element is the most granular (often the title of current page). On many sites this will reflect the website’s navigational breadcrumb, though without the first “Home” element.<br>This categorisation should be implemented consistantly across the site. e.g. ['balls', 'footballs', 'addidas']</td></tr>
 </table>
 
 For example:
