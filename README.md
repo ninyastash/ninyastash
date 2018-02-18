@@ -92,14 +92,14 @@ window.ninyastash = {
 		"returning": true
 	},
 	"page": {
-		"type": "content",
-    breadcrumb: [
-      'faq',
-      'service'
-    ]
-	},
+		"type": "content"
+	}
+        "breadcrumb": [
+      		"faq",
+      		"service"
+    	],
 	"environment": "production",
-  "version": "1.3.1"
+  	"version": "1.3.1"
 }
 ```
 
@@ -430,37 +430,3 @@ window.ninyastash = {
 	}
 }
 ```
-
-## Journey
-
-The Journey object is used as part of a travel-related [Product](#product), representing a single 'leg' of travel.
-
-Properties:
-
-<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Journey Type</td><td>type</td><td>String</td><td>Label for the type of journey, e.g. 'flight','train'.</td></tr>
-<tr><td>Journey Name</td><td>name</td><td>String</td><td>Short description of this journey, e.g. 'Flight BA456 from JFK'.</td></tr>
-<tr><td>Journey Code</td><td>code</td><td>String</td><td>Unique identifier for this journey, e.g. an Amadeus or Sabre code.</td></tr>
-<tr><td>Journey Time</td><td>time</td><td>String</td><td><a href="http://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> representation of the date and/or time of travel.</td></tr>
-<tr><td>Journey Adult Count</td><td>adults</td><td>Number</td><td>Number of adults travelling.</td></tr>
-<tr><td>Journey Child Count</td><td>children</td><td>Number</td><td>Number of children travelling.</td></tr>
-<tr><td>Journey Infant Count</td><td>infants</td><td>Number</td><td>Number of infants travelling.</td></tr>
-</table>
-
-Example:
-
-```javascript
-window.ninyastash = {
-	"product": {
-		"journeys": [{
-		"type": "flight",
-		"name": "Flight BA123 from London Heathrow",
-		"code": "FLIGHTCODE123",
-		"time": "2012-09-01 09:00",
-		"adults": 2,
-		"children": 2,
-		"infants": 0
-		}]
-	}
-}
- ```
