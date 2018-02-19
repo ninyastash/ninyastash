@@ -152,8 +152,6 @@ window.ninyastash = {
 
 Each visit should be associated to attributions. 
 
-Properties (all optional):
-
 <table><tr><th>Property</th><th>JSON Key</th><th>Type</th><th>Description</th></tr>
 <tr><td>Attribution Referrer</td><td>referrer</td><td>String :|mandatory</td><td>The referrer `window.document.referrer` only the host: "https://www.example.org/example/example.html?e=example&b=x" should be "https://www.example.org/"</td></tr>
 <tr><td>Attribution Campaign</td><td>campaign</td><td>String :|mandatory</td><td>The campaign (utm_campaign). If none empty String</td></tr>
