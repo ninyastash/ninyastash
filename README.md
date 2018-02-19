@@ -65,6 +65,8 @@ ninyastash can contain any of the following properties:
 <table>
 	<tr><th>JSON key</th><th>Type :|Mode</th><th>Describes</th></tr>
   <tr><td>page</td><td><a href="#page">Page Object</a> :|mandatory</td><td>The page currently being viewed.</td></tr>
+  <tr><td>session</td><td><a href="#session">Session Object</a> :|mandatory</td><td>The current session object</td></tr>
+  <tr><td>attribution</td><td><a href="#attribution">Attribution Object</a> :|mandatory</td><td>The current attribution object</td></tr>
 	<tr><td>user</td><td><a href="#user">User Object</a> :|optional</td><td>The visitor or logged in user.</td></tr>
 	<tr><td>product</td><td><a href="#product">Product Object</a> :|optional</td><td>The product being shown on this page, if a single product is being displayed.</td></tr>
 	<tr><td>basket</td><td><a href="#basket">Basket Object</a> :|optional</td><td>The state of the visitor's basket at the time this page was served.</td></tr>
@@ -109,8 +111,6 @@ window.ninyastash = {
 
 The Page object describes the current page.
 
-Properties (all optional):
-
 <table><tr><th>Property</th><th>JSON Key</th><th>Type</th><th>Description</th></tr>
 <tr><td>Page Type</td><td>type</td><td>String :|mandatory</td><td>We strongly recommend home, category, product, basket, checkout or confirmation for a traditional retail site. For other verticals, such as travel, you may need some customisation</td></tr>
 <tr><td>Page Breadcrumb</td><td>breadcrumb</td><td>Array :|mandatory</td><td>Multi-level categorisation of the current page in the site hierarchy, presented as an array where element 0 is the highest level category and the final element is the most granular (often the title of current page). On many sites this will reflect the website’s navigational breadcrumb, though without the first “Home” element.<br>This categorisation should be implemented consistantly across the site. e.g. ['balls', 'footballs', 'addidas']</td></tr>
@@ -130,6 +130,50 @@ window.ninyastash = {
 }
 ```
 
+## Session
+
+Each visit must be associated to a session. A session consists at least a hash. After 30 min idle the hash has to be renewed. 
+
+<table><tr><th>Property</th><th>JSON Key</th><th>Type</th><th>Description</th></tr>
+<tr><td>Session Hash</td><td>hash</td><td>String :|mandatory</td><td>The hash associated to the session. After 30 min idle the hash has to be renewed.</td></tr>
+</table>
+
+For example:
+
+``` javascript
+window.ninyastash = {
+	"session": {
+		"hash": "63zehdbze628dndher78297hfzet2ldodfu"
+	}
+}
+```
+
+## Attribution
+
+Each visit should be associated to attributions. 
+
+Properties (all optional):
+
+<table><tr><th>Property</th><th>JSON Key</th><th>Type</th><th>Description</th></tr>
+<tr><td>Attribution Referrer</td><td>referrer</td><td>String :|mandatory</td><td>The referrer `window.document.referrer` only the host: "https://www.example.org/example/example.html?e=example&b=x" should be "https://www.example.org/"</td></tr>
+<tr><td>Attribution Campaign</td><td>campaign</td><td>String :|mandatory</td><td>The campaign (utm_campaign). If none empty String</td></tr>
+<tr><td>Attribution Medium</td><td>medium</td><td>String :|mandatory</td><td>The campaign (utm_medium). If none empty String</td></tr>
+<tr><td>Attribution Source</td><td>source</td><td>String :|mandatory</td><td>The campaign (utm_source). If none empty String</td></tr>
+</table>
+
+For example:
+
+``` javascript
+window.ninyastash = {
+  attribution: {
+    referrer: "https://www.example.org",
+    campaign: "B24%2ESIM_S%2E20180211_SA2",
+    medium: "email",
+    source: "SIM"
+  }
+}
+```
+
 ## User
 
 The User object describes the current user of the web site.  This object should be populated whether or not the user is logged in.
@@ -143,7 +187,7 @@ The User object describes the current user of the web site.  This object should 
 <tr><td>User Returning Status</td><td>returning</td><td>Boolean :|optional</td><td>False if this page view forms part of the user's first visit to this site, True otherwise.</td></tr>
 <tr><td>User Transacted Status</td><td>has_transacted</td><td>Boolean :|optional</td><td>True if this user has completed a transaction at any time in the past (i.e. earlier in this visit, or during a previous visit).</td></tr>
 <tr><td>User Gender</td><td>gender</td><td>String(m|f) :|optional</td><td>Male: m. Female: f</td></tr>
-<tr><td>User Session</td><td>session</td><td>String :|optional</td><td>If provided</td></tr>
+<tr><td>User Hash</td><td>hash</td><td>String :|optional</td><td>The hash for the user. This stays to the user and will not be renewed (different form the <a href="#session">Session</a> Hash)</td></tr>
 </table>
 
 Example:
@@ -158,7 +202,7 @@ window.ninyastash = {
 		"language": "en-gb",
 		"returning": true,
 		"gender": "f",
-		"session": "a8d7f6w9evje8262890c0d8d7cd7d628hvjelw"
+		"hash": "a8d7f6w9evje8262890c0d8d7cd7d628hvjelw"
 	}
 }
 ```
