@@ -170,7 +170,8 @@ The listing object describes a list of [Products](#product), for example as disp
 Properties:
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Listing Id Query</td><td>id</td><td>Number :|mandatory</td><td>If the products are search results, the query that was entered.</td></tr>
+<tr><td>Listing Id</td><td>id</td><td>Number :|mandatory</td><td>If the products are search results, the query that was entered.</td></tr>
+<tr><td>Listing Title</td><td>id</td><td>String :|optional</td><td>If the products are search results, the query that was entered.</td></tr>
 <tr><td>Listing Items</td><td>items</td><td>Array of <a href="#product">Product</a> objects  :|mandatory</td><td>The products which have been displayed to the user on this page.</td></tr>
 </table>
 
@@ -179,7 +180,8 @@ Example:
 ```javascript
 window.ninyastash = {
 	"listing": {
-		"id": "shoes on sale",
+		"id": 123,
+    "title": "Green Footballs"
 		"items": [Product, Product, Product, ...]
 	}
 }
@@ -201,9 +203,9 @@ There are many possible types of product on the Web - here, we first list proper
 ### Properties common across most products
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Product ID</td><td>id</td><td>String</td><td>A unique identifier for the product, that is used by the web site only, i.e. not necessarily a Stock Keeping Unit (SKU) Code.</td></tr>
+<tr><td>Product ID</td><td>id</td><td>String  :|mandatory</td><td>A unique identifier for the product, that is used by the web site only, i.e. not necessarily a Stock Keeping Unit (SKU) Code.</td></tr>
 <tr><td>Product URL</td><td>url</td><td>String :|optional</td><td>A canonical URL for this product.</td></tr>
-<tr><td>Product Name</td><td>name</td><td>String</td><td>Name of the product.</td></tr>
+<tr><td>Product Name</td><td>name</td><td>String :|mandatory</td><td>Name of the product.</td></tr>
 <tr><td>Product Description</td><td>description :|optional</td><td>String</td><td>Brief (truncated to almost 80 characters) description of the product.</td></tr>
 <tr><td>Product Manufacturer</td><td>manufacturer :|optional</td><td>String</td><td>Name of the manufacturer for this product.</td></tr>
 <tr><td>Product Category</td><td>category</td><td>String :|optional</td><td>A short description of this type of product, e.g. 'shoes', 'package holiday'.</td></tr>
@@ -216,15 +218,14 @@ There are many possible types of product on the Web - here, we first list proper
 ### Additional properties for products requiring stock keeping
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Product SKU Code</td><td>sku_code</td><td>String</td><td>The Stock Keeping Unit (SKU) code for the product.</td></tr>
-<tr><td>Product Stock Remaining</td><td>stock</td><td>Number</td><td>The quantity of this product remaining in stock (zero for out-of-stock).</td></tr>
+<tr><td>Product SKU Code</td><td>sku_code</td><td>String  :|optional</td><td>The Stock Keeping Unit (SKU) code for the product.</td></tr>
+<tr><td>Product Stock Remaining</td><td>stock</td><td>Number :|optional</td><td>The quantity of this product remaining in stock (zero for out-of-stock).</td></tr>
 </table>
 
 ### Additional properties for products with promotions
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-
-<tr><td>Product Voucher Code</td><td>voucher</td><td>String</td><td>A voucher code that has been entered by the user which changes the price of this product.  If the user's voucher is not product-specific, it should instead be applied to the Transaction object after a transaction has been completed.</td></tr>
+<tr><td>Product Voucher Code</td><td>voucher :|optional</td><td>String</td><td>A voucher code that has been entered by the user which changes the price of this product.  If the user's voucher is not product-specific, it should instead be applied to the Transaction object after a transaction has been completed.</td></tr>
 </table>
 
 
@@ -289,17 +290,17 @@ The Basket object describes the current state of the a user's shopping basket or
 Properties:
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Basket ID</td><td>id</td><td>String</td><td>A unique ID for this basket.</td></tr>
-<tr><td>Basket Currency</td><td>currency</td><td>String</td><td><i>Mandatory.  </i>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency this basket's costs are denominated in.</td></tr>
-<tr><td>Basket Price</td><td>subtotal</td><td>Number</td><td><i>Mandatory.  </i>The cost of the basket, excluding shipping or discounts.</td></tr>
-<tr><td>Basket Price Includes Tax</td><td>subtotal_include_tax</td><td>Boolean</td><td>Indicates whether Basket Price includes tax.</td></tr>
-<tr><td>Basket Voucher Code</td><td>voucher</td><td>String</td><td>Voucher code entered.</td></tr>
-<tr><td>Basket Voucher Discount</td><td>voucher_discount</td><td>Number</td><td>Total amount of discount due to the voucher code entered.</td></tr>
-<tr><td>Basket Tax</td><td>tax</td><td>Number</td><td>The amount of tax payable for this basket.</td></tr>
-<tr><td>Basket Shipping Cost</td><td>shipping_cost</td><td>Number</td><td>The amount of shipping cost payable for the items in this basket.</td></tr>
-<tr><td>Basket Shipping Method</td><td>shipping_method</td><td>String</td><td>Delivery method selected for the items in this basket.</td></tr>
-<tr><td>Basket Total</td><td>total</td><td>Number</td><td>The total cost of this basket, including tax, shipping and discounts.</td></tr>
-<tr><td>Basket Items</td><td>line_items</td><td>Array of <a href="#lineitem">LineItem</a> objects</td><td>The items (and their quantities) present in the basket.  One LineItem per distinct product.</td></tr>
+<tr><td>Basket ID</td><td>id</td><td>String :|optional</td><td>A unique ID for this basket.</td></tr>
+<tr><td>Basket Currency</td><td>currency</td><td>String :|mandatory</td><td>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency this basket's costs are denominated in.</td></tr>
+<tr><td>Basket Price</td><td>subtotal</td><td>Number :|mandatory</td><td>The cost of the basket, excluding shipping or discounts.</td></tr>
+<tr><td>Basket Price Includes Tax</td><td>subtotal_include_tax</td><td>Boolean :|optional</td><td>Indicates whether Basket Price includes tax.</td></tr>
+<tr><td>Basket Voucher Code</td><td>voucher</td><td>String :|optional</td><td>Voucher code entered.</td></tr>
+<tr><td>Basket Voucher Discount</td><td>voucher_discount</td><td>Number :|optional</td><td>Total amount of discount due to the voucher code entered.</td></tr>
+<tr><td>Basket Tax</td><td>tax</td><td>Number :|optional</td><td>The amount of tax payable for this basket.</td></tr>
+<tr><td>Basket Shipping Cost</td><td>shipping_cost</td><td>Number :|optional</td><td>The amount of shipping cost payable for the items in this basket.</td></tr>
+<tr><td>Basket Shipping Method</td><td>shipping_method</td><td>String :|optional</td><td>Delivery method selected for the items in this basket. Like "UPS" or "DHL".</td></tr>
+<tr><td>Basket Total</td><td>total</td><td>Number :|mandatory<</td><td>The total cost of this basket, including tax, shipping and discounts.</td></tr>
+<tr><td>Basket Items</td><td>line_items</td><td>Array of <a href="#lineitem">LineItem</a> objects :|mandatory<</td><td>The items (and their quantities) present in the basket.  One LineItem per distinct product.</td></tr>
 </table>
 
 Example:
@@ -327,12 +328,12 @@ The Address object is used for billing and shipping information in the [Transact
 Properties:
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Name</td><td>name</td><td>String</td><td>Full name of the recipient.</td></tr>
-<tr><td>Address</td><td>address</td><td>String</td><td>Street address (excluding city, state, postcode, country).</td></tr>
-<tr><td>City</td><td>city</td><td>String</td><td>City.</td></tr>
-<tr><td>State</td><td>state</td><td>String</td><td>State (Two-letter abbreviation if a US state)</td></tr>
-<tr><td>Postcode</td><td>postcode</td><td>String</td><td>The postal code or ZIP code.</td></tr>
-<tr><td>Country</td><td>country</td><td>String</td><td>Country, using the two-letter <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha 2</a> standard.</td></tr>
+<tr><td>Name</td><td>name</td><td>String :|mandatory</td><td>Full name of the recipient.</td></tr>
+<tr><td>Address</td><td>address</td><td>String :|mandatory</td><td>Street address (excluding city, state, postcode, country).</td></tr>
+<tr><td>City</td><td>city</td><td>String :|mandatory</td><td>City.</td></tr>
+<tr><td>State</td><td>state</td><td>String :|optional</td><td>State (Two-letter abbreviation if a US state)</td></tr>
+<tr><td>Postcode</td><td>postcode</td><td>String :|mandatory</td><td>The postal code or ZIP code.</td></tr>
+<tr><td>Country</td><td>country</td><td>String :|mandatory</td><td>Country, using the two-letter <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha 2</a> standard.</td></tr>
 </table>
 
 Example:
@@ -356,21 +357,21 @@ The Transaction object describes a completed purchase, and could be displayed on
 Properties:
 
 <table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
-<tr><td>Transaction ID</td><td>order_id</td><td>String</td><td>A unique ID for this transaction.</td></tr>
+<tr><td>Transaction ID</td><td>order_id</td><td>String :|mandatory</td><td>A unique ID for this transaction.</td></tr>
 <tr><td>Transaction Returning Status</td><td>returning</td><td>Boolean</td><td>False if this is the <b>first time</b> a user has been served this Transaction, i.e. it has just happened.  True if this Transaction has happened some time ago and its details are being reviewed.  For example, the Transaction object on a page served to a user when they have just completed a purchase should read 'False', but if the user returns to this page, for example when clicking a link sent in a confirmation email, it should read 'True'.</td></tr>
-<tr><td>Transaction Currency</td><td>currency</td><td>String</td><td><i>Mandatory.  </i>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency this transaction's costs are denominated in.</td></tr>
-<tr><td>Transaction Payment Type</td><td>payment_type</td><td>String</td><td>Payment method, e.g. 'Visa','PayPal','Voucher'.</td></tr>
+<tr><td>Transaction Currency</td><td>currency</td><td>String :|mandatory</td><td><i>Mandatory.  </i>The <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> code for the currency this transaction's costs are denominated in.</td></tr>
+<tr><td>Transaction Payment Type</td><td>payment_type</td><td>String :|mandatory</td><td>Payment method, e.g. 'Visa','PayPal','Voucher', 'SEPA'.</td></tr>
 <tr><td>Transaction Price</td><td>subtotal</td><td>Number</td><td>The transaction amount, excluding shipping or discounts.</td></tr>
-<tr><td>Transaction Includes Tax</td><td>subtotal_include_tax</td><td>Boolean</td><td>Indicates whether Transaction Price includes tax.</td></tr>
-<tr><td>Transaction Voucher Code</td><td>voucher</td><td>String</td><td>Voucher code entered.</td></tr>
-<tr><td>Transaction Voucher Discount</td><td>voucher_discount</td><td>Number</td><td>Total amount of discount due to the voucher code entered.</td></tr>
-<tr><td>Transaction Tax</td><td>tax</td><td>Number</td><td>The amount of tax payable for this transaction.</td></tr>
-<tr><td>Transaction Shipping Cost</td><td>shipping_cost</td><td>Number</td><td>The amount of shipping cost payable for this transaction.</td></tr>
-<tr><td>Transaction Shipping Method</td><td>shipping_method</td><td>String</td><td>Delivery method selected for this transaction.</td></tr>
-<tr><td>Transaction Total</td><td>total</td><td>Number</td><td><i>Mandatory. </i>The total cost of this transaction, including tax, shipping and discounts.</td></tr>
-<tr><td>Transaction Delivery Address</td><td>delivery</td><td><a href="#address">Address</a> object</td><td>Delivery address for this transaction.</td></tr>
-<tr><td>Transaction Billing Address</td><td>billing</td><td><a href="#address">Address</a> object</td><td>Billing address for this transaction.</td></tr>
-<tr><td>Basket Items</td><td>line_items</td><td>Array of <a href="#lineitem">LineItem</a> objects</td><td>The items (and their quantities) present in the basket.  One LineItem per distinct product.</td></tr>
+<tr><td>Transaction Includes Tax</td><td>subtotal_include_tax</td><td>Boolean :|mandatory</td><td>Indicates whether Transaction Price includes tax.</td></tr>
+<tr><td>Transaction Voucher Code</td><td>voucher</td><td>String :|optional</td><td>Voucher code entered.</td></tr>
+<tr><td>Transaction Voucher Discount</td><td>voucher_discount</td><td>Number :|optional</td><td>Total amount of discount due to the voucher code entered.</td></tr>
+<tr><td>Transaction Tax</td><td>tax</td><td>Number :|mandatory</td><td>The amount of tax payable for this transaction.</td></tr>
+<tr><td>Transaction Shipping Cost</td><td>shipping_cost</td><td>Number :|mandatory</td><td>The amount of shipping cost payable for this transaction.</td></tr>
+<tr><td>Transaction Shipping Method</td><td>shipping_method</td><td>String :|mandatory</td><td>Delivery method selected for this transaction, e.g. 'UPS', 'DHL'</td></tr>
+<tr><td>Transaction Total</td><td>total</td><td>Number :|mandatory</td><td>The total cost of this transaction, including tax, shipping and discounts.</td></tr>
+<tr><td>Transaction Delivery Address</td><td>delivery</td><td><a href="#address">Address</a> object :|mandatory</td><td>Delivery address for this transaction.</td></tr>
+<tr><td>Transaction Billing Address</td><td>billing</td><td><a href="#address">Address</a> object :|mandatory</td><td>Billing address for this transaction.</td></tr>
+<tr><td>Basket Items</td><td>line_items</td><td>Array of <a href="#lineitem">LineItem</a> objects :|mandatory</td><td>The items (and their quantities) present in the basket.  One LineItem per distinct product.</td></tr>
 </table>
 
 Example:
