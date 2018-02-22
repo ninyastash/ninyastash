@@ -68,10 +68,11 @@ ninyastash can contain any of the following properties:
   <tr><td>session</td><td><a href="#session">Session Object</a> :|mandatory</td><td>The current session object</td></tr>
   <tr><td>attribution</td><td><a href="#attribution">Attribution Object</a> :|mandatory</td><td>The current attribution object</td></tr>
 	<tr><td>user</td><td><a href="#user">User Object</a> :|optional</td><td>The visitor or logged in user.</td></tr>
+  <tr><td>experiments</td><td><a href="#experiments">Experiments Object</a> :|optional</td><td>If an Experiment is involved in the page.</td></tr>
+  <tr><td>listing</td><td><a href="#listing">Listing Object</a> :|optional</td><td>Multiple products that are present on a page (e.g. search results, or a product category page).</td></tr>
 	<tr><td>product</td><td><a href="#product">Product Object</a> :|optional</td><td>The product being shown on this page, if a single product is being displayed.</td></tr>
 	<tr><td>basket</td><td><a href="#basket">Basket Object</a> :|optional</td><td>The state of the visitor's basket at the time this page was served.</td></tr>
 	<tr><td>transaction</td><td><a href="#transaction">Transaction Object</a> :|optional</td><td>A transaction that has <i>just completed</i> (if this is the first page view served to the user since they completed the transaction).</td></tr>
-	<tr><td>listing</td><td><a href="#listing">Listing Object</a> :|optional</td><td>Multiple products that are present on a page (e.g. search results, or a product category page).</td></tr>
   <tr><td>environment</td><td>String :|mandatory</td><td>A name for the environment which is creating this ninyastash data, e.g. 'development', 'testing', 'production'.</td></tr>
   <tr><td>version</td><td>String :|mandatory</td><td>Which version of this standard is being used.</td></tr>
 </table>
@@ -201,6 +202,25 @@ window.ninyastash = {
 		"returning": true,
 		"gender": "f",
 		"hash": "a8d7f6w9evje8262890c0d8d7cd7d628hvjelw"
+	}
+}
+```
+
+## Experiments
+
+The Experiments Object collects all experiments the session is run through.
+
+<table><tr><th>Property</th><th>JSON key</th><th>Type</th><th>Description</th></tr>
+<tr><td>Experiments Name (FullName as String)</td><td>Value</td><td>String :|optional</td><td>The key is the Name of the experiment, the value is 'a', 'b', 'c', etc</td></tr>
+</table>
+
+Example:
+
+``` javascript
+window.ninyastash = {
+	"experiments": {
+		"nameOfOneExperiment": "a",
+    		"nameOfOneOtherExperiment": "b"
 	}
 }
 ```
